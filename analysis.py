@@ -25,6 +25,7 @@ def create_scatter_plot(xData, yData, xLabel, yLabel, title):
   print(f'p-value: {p_value}')
   print(f'R^2: {r_value * r_value}')
   print(f'slope: {slope}')
+  print(f'standard error: {std_err}')
 
   plt.scatter(xData, yData)
   plt.plot(np.linspace(-1,1), regression)
