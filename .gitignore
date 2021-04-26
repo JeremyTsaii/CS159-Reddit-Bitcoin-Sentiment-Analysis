@@ -1,2 +1,3 @@
 *.csv
-*.json
+by_month.json
+by_year.json
