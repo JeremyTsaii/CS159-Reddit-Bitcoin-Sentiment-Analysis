@@ -1,3 +1,5 @@
 *.csv
 by_month.json
 by_year.json
+by_day.json
+by_day_bitcoin.json
