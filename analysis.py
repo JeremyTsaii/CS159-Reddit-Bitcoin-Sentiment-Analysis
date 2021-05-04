@@ -196,56 +196,103 @@ if __name__ == "__main__":
   # Next run of analyses of days data
   ###################################
 
-    # Extract data from json files
-  btc_day = get_json('days.json')
+  # # Extract data from json files
+  # btc_day = get_json('days.json')
 
-  # Run once to extract average sentiments from comments
-  # comments_to_sentiments(analyzer, 'by_day.json', 'sentiment_day.json')
-  # comments_to_sentiments(analyzer, 'by_day_bitcoin.json', 'sentiment_day_bitcoin.json')
+  # # Run once to extract average sentiments from comments
+  # # comments_to_sentiments(analyzer, 'by_day.json', 'sentiment_day.json')
+  # # comments_to_sentiments(analyzer, 'by_day_bitcoin.json', 'sentiment_day_bitcoin.json')
+
+  # sentiment_day = get_json('sentiment_day.json')
+  # sentiment_day_bitcoin = get_json('sentiment_day_bitcoin.json')
+
+  # # Get keys in sorted order for plotting
+  # days = sorted(btc_day.keys())
+
+  # # Ensure days correspond between bitcoin prices and sentiment data
+  # assert days == sorted(sentiment_day.keys())
+  # assert days == sorted(sentiment_day_bitcoin.keys())
+
+  # btc_day_sorted = [btc_day[key] for key in days]
+  # sentiment_day_sorted = [sentiment_day[key] for key in days]
+  # sentiment_day_bitcoin_sorted = [sentiment_day_bitcoin[key] for key in days]
+
+  # btc_day_sorted_normalized = normalize(btc_day_sorted)
+  # sentiment_day_sorted_normalized = normalize(sentiment_day_sorted)
+  # sentiment_day_bitcoin_sorted_normalized = normalize(sentiment_day_bitcoin_sorted)
+
+  # # # Plot of Bitcoin prices over time (days)
+  # create_plot(days, btc_day_sorted, "darkorange", "Bitcoin Price", "Day", "Price ($)", "Bitcoin Prices Over Days", "btc_day.png")
+
+  # # # Plot of Reddit comment sentiments over time (days)
+  # create_plot(days, sentiment_day_sorted, "darkorange", "Sentiment", "Day", "Sentiment (0 - 1)", "Reddit Comment Sentiment Over Days", "sentiment_day.png")
+
+  # # # Plot of Reddit comment sentiments over time (days and bitcoin subreddit only)
+  # create_plot(days, sentiment_day_bitcoin_sorted, "darkorange", "Sentiment", "Day", "Sentiment (0 - 1)", "Reddit Comment Sentiment Over Days - Bitcoin Subreddit", "sentiment_day_bitcoin.png")
+
+  # # Plot of Bitcoin price vs. sentiment (day)
+  # create_scatter_plot(sentiment_day_sorted, btc_day_sorted, "Sentiment", "Bitcoin Price", "Bitcoin Prices vs. Sentiment (day)", "regression_day.png")
+
+  # # Plot of Bitcoin price vs. sentiment (day and bitcion subreddit only)
+  # create_scatter_plot(sentiment_day_bitcoin_sorted, btc_day_sorted, "Sentiment", "Bitcoin Price", "Bitcoin Prices vs. Sentiment (day) - Bitcoin Subreddit", "regression_day_bitcoin.png")
+
+  
+  # # Normalized plots
+  # # Plot of normalized Bitcoin price and sentiment versus day
+  # create_plot(days, btc_day_sorted_normalized, "darkorange", "Bitcoin Price", "Day", "Normalized Price/Sentiment", "Normalized Price/Sentiment vs. Day", "normalized_day.png", sentiment_day_sorted_normalized, "lightblue", "Sentiment")
+  
+  # # Plot of normalized Bitcoin price and sentiment versus day - bitcoin subreddit only
+  # create_plot(days, btc_day_sorted_normalized, "darkorange", "Bitcoin Price", "Day", "Normalized Price/Sentiment", "Normalized Price/Sentiment vs. Day - Bitcoin Subreddit", "normalized_day_bitcoin.png", sentiment_day_bitcoin_sorted_normalized, "lightblue", "Sentiment")
+
+  # # Plot of Bitcoin price vs. sentiment normalized (day)
+  # create_scatter_plot(sentiment_day_sorted_normalized, btc_day_sorted_normalized, "Sentiment", "Bitcoin Price", "Normalized Bitcoin Prices vs. Sentiment (day)", "normalized_regression_day.png")
+
+  # # Plot of Bitcoin price vs. sentiment normalized (day) - bitcoin subreddit only
+  # create_scatter_plot(sentiment_day_bitcoin_sorted_normalized, btc_day_sorted_normalized, "Sentiment", "Bitcoin Price", "Normalized Bitcoin Prices vs. Sentiment (day) - Bitcoin Subreddit Only", "normalized_regression_day_bitcoin.png")
+
+  #######################################################
+  # Final run of analyses on percent change data vs. days
+  #######################################################
+
+  # Extract data from json files
+  btc_day_change = get_json('dayPercentChanges.json')
 
   sentiment_day = get_json('sentiment_day.json')
   sentiment_day_bitcoin = get_json('sentiment_day_bitcoin.json')
 
   # Get keys in sorted order for plotting
-  days = sorted(btc_day.keys())
+  days = sorted(btc_day_change.keys())
 
   # Ensure days correspond between bitcoin prices and sentiment data
   assert days == sorted(sentiment_day.keys())
   assert days == sorted(sentiment_day_bitcoin.keys())
 
-  btc_day_sorted = [btc_day[key] for key in days]
+  btc_day_change_sorted = [btc_day_change[key] for key in days]
   sentiment_day_sorted = [sentiment_day[key] for key in days]
   sentiment_day_bitcoin_sorted = [sentiment_day_bitcoin[key] for key in days]
 
-  btc_day_sorted_normalized = normalize(btc_day_sorted)
+  btc_day_change_sorted_normalized = normalize(btc_day_change_sorted)
   sentiment_day_sorted_normalized = normalize(sentiment_day_sorted)
   sentiment_day_bitcoin_sorted_normalized = normalize(sentiment_day_bitcoin_sorted)
 
-  # # Plot of Bitcoin prices over time (days)
-  create_plot(days, btc_day_sorted, "darkorange", "Bitcoin Price", "Day", "Price ($)", "Bitcoin Prices Over Days", "btc_day.png")
+  # # Plot of Bitcoin price changes over time (days)
+  create_plot(days, btc_day_change_sorted, "darkorange", "Bitcoin Price Change (%)", "Day", "Price ($)", "Bitcoin Price Changes (%) Over Days", "btc_day_change.png")
 
-  # # Plot of Reddit comment sentiments over time (days)
-  create_plot(days, sentiment_day_sorted, "darkorange", "Sentiment", "Day", "Sentiment (0 - 1)", "Reddit Comment Sentiment Over Days", "sentiment_day.png")
+  # Plot of Bitcoin price changes vs. sentiment (day)
+  create_scatter_plot(sentiment_day_sorted, btc_day_change_sorted, "Sentiment", "Bitcoin Price Change (%)", "Bitcoin Price Changes (%) vs. Sentiment (day)", "regression_day_change.png")
 
-  # # Plot of Reddit comment sentiments over time (days and bitcoin subreddit only)
-  create_plot(days, sentiment_day_bitcoin_sorted, "darkorange", "Sentiment", "Day", "Sentiment (0 - 1)", "Reddit Comment Sentiment Over Days - Bitcoin Subreddit", "sentiment_day_bitcoin.png")
-
-  # Plot of Bitcoin price vs. sentiment (day)
-  create_scatter_plot(sentiment_day_sorted, btc_day_sorted, "Sentiment", "Bitcoin Price", "Bitcoin Prices vs. Sentiment (day)", "regression_day.png")
-
-  # Plot of Bitcoin price vs. sentiment (day and bitcion subreddit only)
-  create_scatter_plot(sentiment_day_bitcoin_sorted, btc_day_sorted, "Sentiment", "Bitcoin Price", "Bitcoin Prices vs. Sentiment (day) - Bitcoin Subreddit", "regression_day_bitcoin.png")
-
+  # Plot of Bitcoin price changes vs. sentiment (day and bitcion subreddit only)
+  create_scatter_plot(sentiment_day_bitcoin_sorted, btc_day_change_sorted, "Sentiment", "Bitcoin Price Change (%)", "Bitcoin Price Changes (%) vs. Sentiment (day) - Bitcoin Subreddit", "regression_day_change_bitcoin.png")
   
   # Normalized plots
-  # Plot of normalized Bitcoin price and sentiment versus day
-  create_plot(days, btc_day_sorted_normalized, "darkorange", "Bitcoin Price", "Day", "Normalized Price/Sentiment", "Normalized Price/Sentiment vs. Day", "normalized_day.png", sentiment_day_sorted_normalized, "lightblue", "Sentiment")
+  # Plot of normalized Bitcoin price changes and sentiment versus day
+  create_plot(days, btc_day_change_sorted_normalized, "darkorange", "Bitcoin Price Change (%)", "Day", "Normalized Price Change/Sentiment", "Normalized Price Change (%) and Sentiment vs. Day", "normalized_day_change.png", sentiment_day_sorted_normalized, "lightblue", "Sentiment")
   
-  # Plot of normalized Bitcoin price and sentiment versus day - bitcoin subreddit only
-  create_plot(days, btc_day_sorted_normalized, "darkorange", "Bitcoin Price", "Day", "Normalized Price/Sentiment", "Normalized Price/Sentiment vs. Day - Bitcoin Subreddit", "normalized_day_bitcoin.png", sentiment_day_bitcoin_sorted_normalized, "lightblue", "Sentiment")
+  # Plot of normalized Bitcoin price changes and sentiment versus day - bitcoin subreddit only
+  create_plot(days, btc_day_change_sorted_normalized, "darkorange", "Bitcoin Price Change (%)", "Day", "Normalized Price Change/Sentiment", "Normalized Price Change (%) and Sentiment vs. Day - Bitcoin Subreddit", "normalized_day_change_bitcoin.png", sentiment_day_bitcoin_sorted_normalized, "lightblue", "Sentiment")
 
-  # Plot of Bitcoin price vs. sentiment normalized (day)
-  create_scatter_plot(sentiment_day_sorted_normalized, btc_day_sorted_normalized, "Sentiment", "Bitcoin Price", "Normalized Bitcoin Prices vs. Sentiment (day)", "normalized_regression_day.png")
+  # Plot of Bitcoin price change vs. sentiment normalized (day)
+  create_scatter_plot(sentiment_day_sorted_normalized, btc_day_change_sorted_normalized, "Sentiment", "Bitcoin Price Change (%)", "Normalized Bitcoin Price Changes (%) vs. Sentiment (day)", "normalized_regression_day_change.png")
 
-  # Plot of Bitcoin price vs. sentiment normalized (day) - bitcoin subreddit only
-  create_scatter_plot(sentiment_day_bitcoin_sorted_normalized, btc_day_sorted_normalized, "Sentiment", "Bitcoin Price", "Normalized Bitcoin Prices vs. Sentiment (day) - Bitcoin Subreddit Only", "normalized_regression_day_bitcoin.png")
+  # Plot of Bitcoin price change vs. sentiment normalized (day) - bitcoin subreddit only
+  create_scatter_plot(sentiment_day_bitcoin_sorted_normalized, btc_day_change_sorted_normalized, "Sentiment", "Bitcoin Price Change (%)", "Normalized Bitcoin Price Changes (%) vs. Sentiment (day) - Bitcoin Subreddit Only", "normalized_regression_day_change_bitcoin.png")
