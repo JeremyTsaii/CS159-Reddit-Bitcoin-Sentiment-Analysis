@@ -30,19 +30,20 @@ def create_scatter_plot(xData, yData, xLabel, yLabel, title, fname):
   slope, intercept, r_value, p_value, std_err = stats.linregress(xData, yData)
   regression = np.linspace(-1,1) * slope + intercept
 
-  yMax = max(regression)
-  plt.annotate(f'p-value: {p_value}', (0, yMax))
-  plt.annotate(f'R^2: {r_value * r_value}', (0, yMax * .93))
-  plt.annotate(f'slope: {slope}', (0, yMax * .86))
-  plt.annotate(f'standard error: {std_err}', (0, yMax * .79))
+  yMax = max(yData)
+
+  plt.annotate(f'p-value: {p_value}', (-1, yMax))
+  plt.annotate(f'R^2: {r_value * r_value}', (-1, yMax * .9))
+  plt.annotate(f'slope: {slope}', (-1, yMax * .8))
+  plt.annotate(f'standard error: {std_err}', (-1, yMax * .7))
 
   # Create Spearman rank coefficient
   cor, pval = stats.spearmanr(xData, yData)
-  plt.annotate(f'Spearman rank coefficient: {cor}', (0, yMax * .72))
+  plt.annotate(f'Spearman rank coefficient: {cor}', (-1, yMax * .6))
 
-  # Create non-linear least squares fit
-  popt, pcov = optimize.curve_fit(func, xData, yData)
-  plt.plot(xData, func(xData, *popt), 'r-', label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
+  # # Create non-linear least squares fit
+  # popt, pcov = optimize.curve_fit(func, xData, yData)
+  # plt.plot(xData, func(xData, *popt), 'r-', label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
 
   plt.xticks(rotation = 45, fontsize = 4)
   plt.scatter(xData, yData)
@@ -275,8 +276,8 @@ if __name__ == "__main__":
   sentiment_day_sorted_normalized = normalize(sentiment_day_sorted)
   sentiment_day_bitcoin_sorted_normalized = normalize(sentiment_day_bitcoin_sorted)
 
-  # # Plot of Bitcoin price changes over time (days)
-  create_plot(days, btc_day_change_sorted, "darkorange", "Bitcoin Price Change (%)", "Day", "Price ($)", "Bitcoin Price Changes (%) Over Days", "btc_day_change.png")
+  # # # Plot of Bitcoin price changes over time (days)
+  # create_plot(days, btc_day_change_sorted, "darkorange", "Bitcoin Price Change (%)", "Day", "Price ($)", "Bitcoin Price Changes (%) Over Days", "btc_day_change.png")
 
   # Plot of Bitcoin price changes vs. sentiment (day)
   create_scatter_plot(sentiment_day_sorted, btc_day_change_sorted, "Sentiment", "Bitcoin Price Change (%)", "Bitcoin Price Changes (%) vs. Sentiment (day)", "regression_day_change.png")
@@ -284,12 +285,12 @@ if __name__ == "__main__":
   # Plot of Bitcoin price changes vs. sentiment (day and bitcion subreddit only)
   create_scatter_plot(sentiment_day_bitcoin_sorted, btc_day_change_sorted, "Sentiment", "Bitcoin Price Change (%)", "Bitcoin Price Changes (%) vs. Sentiment (day) - Bitcoin Subreddit", "regression_day_change_bitcoin.png")
   
-  # Normalized plots
-  # Plot of normalized Bitcoin price changes and sentiment versus day
-  create_plot(days, btc_day_change_sorted_normalized, "darkorange", "Bitcoin Price Change (%)", "Day", "Normalized Price Change/Sentiment", "Normalized Price Change (%) and Sentiment vs. Day", "normalized_day_change.png", sentiment_day_sorted_normalized, "lightblue", "Sentiment")
+  # # Normalized plots
+  # # Plot of normalized Bitcoin price changes and sentiment versus day
+  # create_plot(days, btc_day_change_sorted_normalized, "darkorange", "Bitcoin Price Change (%)", "Day", "Normalized Price Change/Sentiment", "Normalized Price Change (%) and Sentiment vs. Day", "normalized_day_change.png", sentiment_day_sorted_normalized, "lightblue", "Sentiment")
   
-  # Plot of normalized Bitcoin price changes and sentiment versus day - bitcoin subreddit only
-  create_plot(days, btc_day_change_sorted_normalized, "darkorange", "Bitcoin Price Change (%)", "Day", "Normalized Price Change/Sentiment", "Normalized Price Change (%) and Sentiment vs. Day - Bitcoin Subreddit", "normalized_day_change_bitcoin.png", sentiment_day_bitcoin_sorted_normalized, "lightblue", "Sentiment")
+  # # Plot of normalized Bitcoin price changes and sentiment versus day - bitcoin subreddit only
+  # create_plot(days, btc_day_change_sorted_normalized, "darkorange", "Bitcoin Price Change (%)", "Day", "Normalized Price Change/Sentiment", "Normalized Price Change (%) and Sentiment vs. Day - Bitcoin Subreddit", "normalized_day_change_bitcoin.png", sentiment_day_bitcoin_sorted_normalized, "lightblue", "Sentiment")
 
   # Plot of Bitcoin price change vs. sentiment normalized (day)
   create_scatter_plot(sentiment_day_sorted_normalized, btc_day_change_sorted_normalized, "Sentiment", "Bitcoin Price Change (%)", "Normalized Bitcoin Price Changes (%) vs. Sentiment (day)", "normalized_regression_day_change.png")
